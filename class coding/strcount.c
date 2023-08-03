@@ -1,3 +1,4 @@
+// to count words contain in the text
 #include <stdio.h>
 int countWords(char str[]);
 int main()
