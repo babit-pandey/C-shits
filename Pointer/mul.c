@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void mul(int r1, int c1, int c2)
+void mul(int r1, int c1, int c2, int m1[r1][c1], int m2[c1][c2])
 {
     int i, j, k;
     int res[r1][c2];
@@ -65,7 +65,7 @@ int main()
         }
     }
 
-    mul(r1, c1, c2);
+    mul(r1, c1, c2, m1, m2);
 
     return 0;
 }
