@@ -1,29 +1,47 @@
 #include <stdio.h>
-#include <stdlib.h>
-struct info
+
+struct Employee
 {
-    char name[20];
-    int id;
+
+    char name[50];
     float salary;
 };
+
 int main()
 {
     FILE *file;
-    struct info emp;
-    file = fopen("sal.dat", "r");
-    if (file == NULL)
+
+    struct Employee emp[100];
+
+    file = fopen("sal.dat", "r+");
+
+    int count = 0;
+
+    while (fread(&emp[count], sizeof(struct Employee), 1, file) == 1)
     {
-        printf("Error opening file.\n");
-        exit(1);
+        count++;
     }
-    while (fread(&emp, sizeof(emp), 1, file) == 1)
+
+    rewind(file);
+
+    for (int i = 0; i < count; i++)
     {
-        if (emp.salary > 5000)
+        if (emp[i].salary > 5000)
         {
-            printf("%s %d %.2f\n", emp.name, emp.id, emp.salary);
-            emp.salary += emp.salary * 0.2;
+            emp[i].salary *= 1.20;
         }
+        fwrite(&emp[i], sizeof(struct Employee), 1, file);
     }
+
+    for (int i = 0; i < count; i++)
+    {
+
+        printf("Employee Name: %s\n", emp[i].name);
+        printf("Updated Salary: %.2f\n", emp[i].salary);
+        printf("\n");
+    }
+
     fclose(file);
+
     return 0;
 }
